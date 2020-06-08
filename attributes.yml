@@ -1,1 +1,1 @@
-command_path: '/bin/memcached'
+command_relative_path: '/bin/memcached'
