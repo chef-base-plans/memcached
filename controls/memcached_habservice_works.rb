@@ -2,8 +2,6 @@ title 'Tests to confirm memcached habitat service works as expected'
 
 plan_origin = ENV['HAB_ORIGIN']
 plan_name = input('plan_name', value: 'memcached')
-plan_installation_directory = command("hab pkg path #{plan_origin}/#{plan_name}")
-plan_pkg_ident = ((plan_installation_directory.stdout.strip).match /(?<=pkgs\/)(.*)/)[1]
 service_port=11211
 
 control 'core-plans-memcached-hab-service-works' do
@@ -17,6 +15,13 @@ control 'core-plans-memcached-hab-service-works' do
   and also for docker
   '
   
+  plan_installation_directory = command("hab pkg path #{plan_origin}/#{plan_name}")
+  describe plan_installation_directory do
+    its('exit_status') { should eq 0 }
+    its('stdout') { should_not be_empty }
+  end
+
+  plan_pkg_ident = ((plan_installation_directory.stdout.strip).match /(?<=pkgs\/)(.*)/)[1]
   describe command("hab svc status") do
     its('exit_status') { should eq 0 }
     its('stdout') { should_not be_empty }
