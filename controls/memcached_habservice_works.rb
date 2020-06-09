@@ -2,7 +2,7 @@ title 'Tests to confirm memcached habitat service works as expected'
 
 plan_origin = ENV['HAB_ORIGIN']
 plan_name = input('plan_name', value: 'memcached')
-service_port=11211
+service_port=input('service_port', value: 11211)
 
 control 'core-plans-memcached-hab-service-works' do
   impact 1.0
@@ -32,7 +32,7 @@ control 'core-plans-memcached-hab-service-works' do
   describe command(" hab pkg exec core/busybox-static netstat -peanut") do
     its('exit_status') { should eq 0 }
     its('stdout') { should_not be_empty }
-    its('stdout') { should match /:(?<port>#{11211}).*LISTEN\s+(?<program>-|\d+\/#{plan_name})/ }
+    its('stdout') { should match /:(?<port>#{service_port}).*LISTEN\s+(?<program>-|\d+\/#{plan_name})/ }
     its('stderr') { should be_empty }
   end
 end
