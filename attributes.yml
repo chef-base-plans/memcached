@@ -1,2 +1,2 @@
-command_relative_path: '/bin/memcached'
-service_port: 11211
+command_relative_path: 'bin/memcached'
+listening_port: '11211'
