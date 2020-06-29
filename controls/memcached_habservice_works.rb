@@ -37,7 +37,7 @@ control 'core-plans-memcached-habservice-works' do
     its('stderr') { should be_empty }
   end
 
-  netstat_fullpath = File.join(netstat_installation_directory.stdout.strip, "bin/netstat" )
+  netstat_fullpath = File.join(netstat_installation_directory.stdout.strip, "bin", "netstat" )
   listening_port=input('listening_port', value: '11211')
   describe command("#{netstat_fullpath} -peanut") do
     its('exit_status') { should eq 0 }
